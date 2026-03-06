@@ -77,11 +77,13 @@ nav ul {
 
 .content {
   display: flex;
+  flex-direction: column;
 }
 
 .upgrades {
   display: grid;
   grid-template-columns: 1fr 1fr;
+  order: 2;
 }
 
 .upgrades h2 {
@@ -101,14 +103,20 @@ figure img {
   border: 1px solid black;
 }
 
-@media screen and (max-width: 768px) {
+.reviews {
+  order: 1;
+}
+
+@media screen and (min-width: 600px) { 
   .content {
-    flex-direction: column;
+    flex-direction: row;
   }
-  .upgrades {
+
+  .reviews {
     order: 2;
   }
-  .reviews {
+
+  .upgrades {
     order: 1;
   }
 }
