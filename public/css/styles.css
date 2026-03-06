@@ -3,4 +3,112 @@
 *:before,
 *:after {
   box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/******* Background Image ***************/
+body {
+  background-image: url('/images/site/small_check.jpg');
+  background-size: cover; /* Covers the entire viewport */
+  background-position: center center; /* Centers the image */
+  background-repeat: no-repeat; /* Prevents tiling */
+  background-attachment: fixed; /* Keeps background fixed when scrolling */
+  min-height: 100vh; /* Ensures full height */
+}
+
+/******* Content Wrapper ***************/
+#wrapper {
+  background-color: white;
+  max-width: 800px; /* Maximum width for content */
+  margin: 20px auto; /* Centers the wrapper with margin on top/bottom */
+  padding: 20px; /* Internal spacing */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  border-radius: 8px; /* Rounded corners */
+  min-height: calc(100vh - 40px); /* Full height minus margins */
+  border: 5px solid lightblue;
+}
+
+#top-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.siteName a {
+  text-decoration: none;
+  color: black;
+  font-weight: bold;
+  font-size: 50px;
+}
+
+#tools a {
+  text-decoration: none;
+  color: black;
+  font-weight: bold;
+  font-size: 20px;
+  
+}
+
+nav ul {
+  list-style-type: none;
+  display: flex;
+  justify-content: space-around;
+  gap: 20px;
+  padding: 10px;
+  background-color: black;
+  color: white;
+}
+
+.hero {
+  position: relative;
+  padding: 0;
+  text-align: center;
+}
+
+.hero-text {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  background-color: rgba(255, 255, 255, 0.8);
+}
+
+.hero-text img {
+  width: 50%;
+}
+
+.content {
+  display: flex;
+}
+
+.upgrades {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.upgrades h2 {
+  grid-column: span 2;
+}
+
+figure {
+  text-align: center;
+  text-decoration: underline;
+  color: blue;
+}
+
+figure img {
+  background-color: lightblue;
+  text-align: center;
+  padding: 5px 50px;
+  border: 1px solid black;
+}
+
+@media screen and (max-width: 768px) {
+  .content {
+    flex-direction: column;
+  }
+  .upgrades {
+    order: 2;
+  }
+  .reviews {
+    order: 1;
+  }
 }
