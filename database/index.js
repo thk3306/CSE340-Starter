@@ -1,4 +1,4 @@
-const {pool} = require("pg")
+const { Pool } = require("pg")
 require("dotenv").config()
 
 /* ***************
@@ -9,7 +9,7 @@ require("dotenv").config()
  * *************** */
 
 let pool
-if (process.env.NODE == "development") {
+if (process.env.NODE_ENV == "development") {
     pool = new Pool({
         connectionString: process.env.DATABASE_URL,
         ssl: {
@@ -18,20 +18,20 @@ if (process.env.NODE == "development") {
     })
 
     // Added for troubleshooting queries
-// during development
+    // during development
 
-module.exports = {
-    async query(text, params) {
-        try{
-            const res = await pool.query(text, params)
-            console.log("executed query", { text })
-            return res
-        } catch (error) {
-            console.error("error in query", { text })
-            throw error
-        }
-    },
-}
+    module.exports = {
+        async query(text, params) {
+            try{
+                const res = await pool.query(text, params)
+                console.log("executed query", { text })
+                return res
+            } catch (error) {
+                console.error("error in query", { text })
+                throw error
+            }
+        },
+    }
 } else {
     pool = new Pool({
         connectionString: process.env.DATABASE_URL,
