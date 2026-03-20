@@ -20,5 +20,9 @@ invCont.buildByClassificationId = async function (req, res, next) {
     })
 }
 
+invCont.buildByInvId = async function (req, res, next) {
+    const inv_id = req.params.invId
+}
+
 module.exports = invCont;
 
