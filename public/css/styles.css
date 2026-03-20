@@ -28,6 +28,7 @@ body {
 #top-header {
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 
 .siteName a {
@@ -48,11 +49,23 @@ body {
 nav ul {
   list-style-type: none;
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-around;
   gap: 20px;
   padding: 10px;
-  background-color: black;
+  background-color: rgb(0, 0, 0);
   color: white;
+}
+
+nav ul a {
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+}
+
+nav ul a:hover {
+  background-color: white;
+  color: black;
 }
 
 .hero {
@@ -104,6 +117,36 @@ figure img {
   order: 1;
 }
 
+#inv-display {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  text-decoration: none;
+  list-style-type: none;
+}
+
+#inv-display li {
+  background-color: lightblue;
+  margin: 10px;
+  padding: 10px;
+  border: 1px solid black;
+  text-align: center;
+}
+
+#inv-display img {
+  width: 100%;
+  height: auto;
+}
+
+#detail {
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+#detail-image img {
+  width: 100%;
+  height: auto;
+}
+
 @media screen and (min-width: 600px) { 
   .content {
     flex-direction: row;
@@ -115,5 +158,10 @@ figure img {
 
   .upgrades {
     order: 1;
+  }
+
+  #detail {
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
   }
 }

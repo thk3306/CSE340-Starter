@@ -66,12 +66,11 @@ Util.buildDetailView = async function(data){
   if(data.length > 0){
     const vehicle = data[0]
     detail = '<div id="detail">'
-    detail += '<h2>' + vehicle.inv_year + ' ' + vehicle.inv_make + ' ' + vehicle.inv_model + '</h2>'
-    detail += '<hr />'
     detail += '<div id="detail-image">'
     detail += '<img src="' + vehicle.inv_image + '" alt="Image of ' + vehicle.inv_make + ' ' + vehicle.inv_model + ' on CSE Motors" />'
     detail += '</div>'
     detail += '<div id="detail-info">'
+    detail += '<h2>' + vehicle.inv_year + ' ' + vehicle.inv_make + ' ' + vehicle.inv_model + ' Details</h2>'
     detail += '<p><strong>Price: </strong>$' + new Intl.NumberFormat('en-US').format(vehicle.inv_price) + '</p>'
     detail += '<p><strong>Description: </strong>' + vehicle.inv_description + '</p>'
     detail += '<p><strong>Color: </strong>' + vehicle.inv_color + '</p>'
