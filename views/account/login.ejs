@@ -8,7 +8,15 @@
     <label for="client-email" class="form-label">Email:</label>
     <input type="email" class="form-input" id="client-email" name="account_email" required>
     <label for="client-password" class="form-label">Password:</label>
-    <input type="password" class="form-input" id="client-password" name="account_password" required>
+    <div>The password must be:
+<ul>
+    <li>12 characters in length, minimum</li>
+    <li>contain at least 1 capital letter</li>
+    <li>contain at least 1 number</li>
+    <li>contain at least 1 special character</li>
+</ul>
+</div>
+    <input type="password" class="form-input" id="client-password" name="account_password" required pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$">
     <button type="submit" class="form-buttom" id="login-button">Login</button>
     <p>No Account? <a href="/account/registration">Sign-up</a></p>
 </form>
