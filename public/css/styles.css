@@ -147,6 +147,44 @@ figure img {
   height: auto;
 }
 
+.form-label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.form-input {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid black;
+  border-radius: 4px;
+}
+
+form {
+  max-width: 400px;
+  padding: 20px;
+  background-color: lightblue;
+  border: 1px solid black;
+  border-radius: 8px;
+}
+
+form p {
+  text-align: center;
+}
+
+button {
+  display: block;
+  margin: 0 auto;
+  padding: 10px 20px;
+  background-color: white;
+  color: black;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
 @media screen and (min-width: 600px) { 
   .content {
     flex-direction: row;
