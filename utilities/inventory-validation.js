@@ -43,6 +43,7 @@ validate.checkaddClassificationData = async (req, res, next) => {
   * ********************************* */
 
 validate.inventoryRules = () => {
+  const imagePathPattern = /^\/?images\/[a-zA-Z0-9/_-]+\.(png|jpe?g|webp|gif)$/i
   return [
     body("inv_make")
       .trim()
@@ -70,16 +71,14 @@ validate.inventoryRules = () => {
         .withMessage("Please provide a description between 2 and 255 characters."),
     body("inv_image")
         .trim()
-        .escape()
         .notEmpty()
-        .isURL()
-        .withMessage("Please provide a valid image URL."),
+      .matches(imagePathPattern)
+      .withMessage("Please provide a valid image path (example: /images/vehicles/no-image.png)."),
     body("inv_thumbnail")
         .trim()
-        .escape()
         .notEmpty()
-        .isURL()
-        .withMessage("Please provide a valid thumbnail URL."),
+      .matches(imagePathPattern)
+      .withMessage("Please provide a valid thumbnail path (example: /images/vehicles/no-image.png)."),
     body("inv_price")
       .trim()
       .escape()
