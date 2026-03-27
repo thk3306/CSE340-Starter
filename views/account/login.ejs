@@ -4,9 +4,17 @@
 
 <%- messages() %>
 
-<form method="POST" action="/account/login">
+<% if (errors) { %>
+    <ul class="notice">
+        <% errors.array().forEach(error => { %>
+            <li><%= error.msg %></li>
+            <% }) %>
+        </ul>
+    <% } %>
+
+<form method="POST" action="/account/login" id="loginform">
     <label for="client-email" class="form-label">Email:</label>
-    <input type="email" class="form-input" id="client-email" name="account_email" required>
+    <input type="email" class="form-input" id="client-email" name="account_email" required value="<%= locals.account_email %>">
     <label for="client-password" class="form-label">Password:</label>
     <div>The password must be:
 <ul>

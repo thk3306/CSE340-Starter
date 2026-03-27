@@ -14,11 +14,11 @@
 
 <form method="POST" action="/account/register">
     <label for="first-name" class="form-label">First Name:</label>
-    <input type="text" class="form-input" id="first-name" name="account_firstname" required>
+    <input type="text" class="form-input" id="first-name" name="account_firstname" required value="<%= locals.account_firstname %>">
     <label for="last-name" class="form-label">Last Name:</label>
-    <input type="text" class="form-input" id="last-name" name="account_lastname" required>
+    <input type="text" class="form-input" id="last-name" name="account_lastname" required value="<%= locals.account_lastname %>">
     <label for="client-email" class="form-label">Email:</label>
-    <input type="email" class="form-input" id="client-email" name="account_email" required>
+    <input type="email" class="form-input" id="client-email" name="account_email" required value="<%= locals.account_email %>">
     <label for="client-password" class="form-label">Password:</label>
      <div>The password must be:
 <ul>
