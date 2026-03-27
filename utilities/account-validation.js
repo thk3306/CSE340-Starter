@@ -129,4 +129,7 @@ validate.checklogindata = async (req, res, next) => {
     next()
 }
 
+
+
 module.exports = validate
+
