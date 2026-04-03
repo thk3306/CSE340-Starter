@@ -217,5 +217,59 @@ invCont.updateInventory = async function (req, res, next) {
     }
 }
 
+/* ***************************
+ *  Build and Deliver Inventory Delete Confirmation View
+ * ************************** */
+
+invCont.buildDeleteInventory = async function (req, res, next) {
+    let nav = await utilities.getNav()
+    const inv_id = parseInt(req.params.inv_id)
+    const invData = await invModel.getDetailsByInventoryId(inv_id)
+    let invName = `${invData[0].inv_make} ${invData[0].inv_model}`
+    const classificationList = await utilities.buildClassificationList(invData[0].classification_id)
+    
+    res.render("./inventory/delete-confirm", {
+        title: "Confirm Deletion of " + invName,
+        nav,
+        errors: null,
+        inv_id: inv_id,
+        inv_make: invData[0].inv_make,
+        inv_model: invData[0].inv_model,
+        inv_year: invData[0].inv_year,
+        inv_price: invData[0].inv_price,
+    })
+}
+
+/* ****************************************
+*  Process Delete Inventory Item
+* *************************************** */
+
+invCont.deleteInventory = async function (req, res, next) {
+    let nav = await utilities.getNav()
+    const inv_id = parseInt(req.body.inv_id)
+    const inv_make = req.body.inv_make
+    const inv_model = req.body.inv_model
+    const inv_year = req.body.inv_year
+    const inv_price = req.body.inv_price
+    const deleteResult = await invModel.deleteInventoryItem(inv_id)
+    if (deleteResult) {
+        req.flash("notice", `The ${inv_make} ${inv_model} was successfully deleted.`)
+        res.redirect("/inv/")
+    } else {
+        const invName = `${inv_make} ${inv_model}`
+        req.flash("notice", "Sorry, the delete failed.")
+        res.status(501).render("./inventory/delete-confirm", {
+            title: "Confirm Deletion of " + invName,
+            nav: await utilities.getNav(),
+            errors: null,
+            inv_id,
+            inv_make,
+            inv_model,
+            inv_year,
+            inv_price,
+        })
+    }
+}
+
 module.exports = invCont;
 
