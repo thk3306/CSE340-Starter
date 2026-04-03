@@ -35,6 +35,7 @@ app.use(session({
   saveUninitialized: true,
   name: 'sessionId',
 }))
+app.use(utilities.checkJWTToken)
 
 //Express Messages Middleware
 app.use(require('connect-flash')())
