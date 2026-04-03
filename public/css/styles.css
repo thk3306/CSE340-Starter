@@ -185,6 +185,22 @@ button {
   cursor: pointer;
 }
 
+table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid black;
+}
+table th, table td {
+  border: 1px solid black;
+  padding: 8px;
+  text-align: left;
+}
+
+.notice {
+  font-style: italic;
+  color: red;
+}
+
 @media screen and (min-width: 600px) { 
   .content {
     flex-direction: row;
