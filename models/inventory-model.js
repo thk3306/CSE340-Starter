@@ -90,5 +90,62 @@ async function deleteInventoryItem(inv_id){
     }
 }
 
-module.exports = {getClassifications, getInventoryByClassificationId, getDetailsByInventoryId, addClassification, addInventoryItem, updateInventory, deleteInventoryItem}
+/* ***************************
+ *  Get classification by Id
+ * ************************** */
+
+async function getClassificationById(classification_id) {
+    try {
+        const sql = "SELECT * FROM classification WHERE classification_id = $1";
+        const data = await pool.query(sql, [classification_id]);
+        return data.rows[0]
+    } catch (error) {
+        console.error("getClassificationById error: " + error)
+    }
+}
+
+/* ***************************
+ *  Count inventory items in classification
+ * ************************** */
+
+async function countInventoryByClassificationId(classification_id) {
+    try {
+        const sql = "SELECT COUNT(*)::int AS total FROM inventory WHERE classification_id = $1";
+        const data = await pool.query(sql, [classification_id])
+        return data.rows[0].total
+    } catch (error) {
+        console.error("countInventoryByClassificationId error " +error)
+    }
+    }
+
+/* ***************************
+ *  Delete Classification by ID
+ * ************************** */
+
+async function deleteClassificationById(classification_id) {
+    try {
+        const sql = "DELETE FROM classification WHERE classification_id = $1 RETURNING *";
+        const data = await pool.query(sql, [classification_id])
+        return data.rows[0]
+    } catch (error) {
+        console.error("deleteClassificationById error " + error)
+    }
+}
+
+/* ***************************
+ *  Get classifcations with inventory count
+ * ************************** */
+
+async function getClassificationWithInventoryCount() {
+    try {
+        const sql = `SELECT c.classification_id, c.classification_name, COUNT(i.inv_id)::int AS inventory_total FROM classification c LEFT JOIN inventory i ON c.classification_id = i.classification_id GROUP BY c.classification_id, c.classification_name`;
+        const data = await pool.query(sql);
+        return data.rows;
+    } catch (error) {
+        console.error("getClassificationWithInventoryCount error " + error);
+    }
+}
+
+
+module.exports = {getClassifications, getInventoryByClassificationId, getDetailsByInventoryId, addClassification, addInventoryItem, updateInventory, deleteInventoryItem, getClassificationById, countInventoryByClassificationId, deleteClassificationById, getClassificationWithInventoryCount}
 

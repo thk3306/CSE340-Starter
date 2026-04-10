@@ -97,6 +97,27 @@ Util.buildManagementView = async function (){
 }
 
 /* **************************************
+* Build classification managment list with delete links
+* ************************************ */
+
+Util.buildClassificationManagementList = async function () {
+  const data = await invModel.getClassificationWithInventoryCount()
+  let list = '<ul>'
+  data.forEach((row) => {
+    list += '<li>'
+    list += row.classification_name + ' '
+    if (row.inventory_total > 0) {
+      list += '(cannot delete: contains ' + row.inventory_total + ' vehicles)'
+    } else { 
+      list += '<a href="/inv/delete-classification/' + row.classification_id + '" title="Delete classification">[Delete]</a>'
+    }
+    list += '</li>'
+  })
+  list += '</ul>'
+  return list
+}
+
+/* **************************************
 * Build classification list for select element
 * ************************************ */
 
