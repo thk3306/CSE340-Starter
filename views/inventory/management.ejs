@@ -6,6 +6,9 @@
 
 <%- management %>
 
+<h2>Manage Classifications</h2>
+<%- classificationManagementList %>
+
 <h2>Manage Inventory</h2>
 <p>Select a classification to see the vehicles in that category:</p>
 
@@ -14,7 +17,3 @@
 <table id="inventoryDisplay"></table>
 <noscript>Javascript must be enabled to use this page</noscript>
 <script src="../../js/inventory.js"></script>
-
-<h2>Delete Classification</h2>
-<p>Select a classification with no vehicles to delete it.</p>
-<%- classificationManagementList %>

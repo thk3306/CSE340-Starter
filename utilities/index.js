@@ -102,18 +102,22 @@ Util.buildManagementView = async function (){
 
 Util.buildClassificationManagementList = async function () {
   const data = await invModel.getClassificationWithInventoryCount()
-  let list = '<ul>'
+  let list = '<table id="classificationManagementTable">'
+  list += '<thead><tr><th>Classification</th><th>&nbsp;</th><th>&nbsp;</th></tr></thead>'
+  list += '<tbody>'
   data.forEach((row) => {
-    list += '<li>'
-    list += row.classification_name + ' '
+    list += '<tr>'
+    list += '<td>' + row.classification_name + '</td>'
+    list += `<td><a href="/inv/modify-classification/${row.classification_id}" title="Modify">Modify</a></td>`
     if (row.inventory_total > 0) {
-      list += '(cannot delete: contains ' + row.inventory_total + ' vehicles)'
+      list += '<td>(cannot delete: contains ' + row.inventory_total + ' vehicles)</td>'
     } else { 
-      list += '<a href="/inv/delete-classification/' + row.classification_id + '" title="Delete classification">[Delete]</a>'
+      list += '<td><a href="/inv/delete-classification/' + row.classification_id + '" title="Delete classification">Delete</a></td>'
     }
-    list += '</li>'
+    list += '</tr>'
   })
-  list += '</ul>'
+  list += '</tbody>'
+  list += '</table>'
   return list
 }
 

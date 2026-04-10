@@ -133,6 +133,20 @@ async function deleteClassificationById(classification_id) {
 }
 
 /* ***************************
+ *  Update Classification by ID
+ * ************************** */
+
+async function updateClassificationById(classification_id, classification_name) {
+    try {
+        const sql = "UPDATE classification SET classification_name = $1 WHERE classification_id = $2 RETURNING *";
+        const data = await pool.query(sql, [classification_name, classification_id])
+        return data.rows[0]
+    } catch (error) {
+        console.error("updateClassificationById error " + error)
+    }
+}
+
+/* ***************************
  *  Get classifcations with inventory count
  * ************************** */
 
@@ -147,5 +161,5 @@ async function getClassificationWithInventoryCount() {
 }
 
 
-module.exports = {getClassifications, getInventoryByClassificationId, getDetailsByInventoryId, addClassification, addInventoryItem, updateInventory, deleteInventoryItem, getClassificationById, countInventoryByClassificationId, deleteClassificationById, getClassificationWithInventoryCount}
+module.exports = {getClassifications, getInventoryByClassificationId, getDetailsByInventoryId, addClassification, addInventoryItem, updateInventory, deleteInventoryItem, getClassificationById, countInventoryByClassificationId, deleteClassificationById, updateClassificationById, getClassificationWithInventoryCount}
 

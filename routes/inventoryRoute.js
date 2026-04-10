@@ -23,6 +23,10 @@ router.post("/update/", utilities.checkLogin, utilities.checkpermissions, invVal
 router.get("/delete/:inv_id", utilities.checkLogin, utilities.checkpermissions, utilities.handleErrors(invController.buildDeleteInventory))
 //Route for processing the delete inventory request
 router.post('/delete/', utilities.checkLogin, utilities.checkpermissions, utilities.handleErrors(invController.deleteInventory))
+//Route for delivering the modify classification view
+router.get('/modify-classification/:classification_id', utilities.checkLogin, utilities.checkpermissions, utilities.handleErrors(invController.buildModifyClassification))
+//Route for processing the modify classificaiton request
+router.post('/modify-classification/', utilities.checkLogin, utilities.checkpermissions, invValidate.classificationRules(), invValidate.checkaddClassificationData, utilities.handleErrors(invController.modifyClassification))
 //Route for delivering the delete classification confirmation view
 router.get('/delete-classification/:classification_id', utilities.checkLogin, utilities.checkpermissions, utilities.handleErrors(invController.buildDeleteClassification))
 //Route for processing the delete classification request

@@ -1,0 +1,22 @@
+ <% if (title) { %>
+<h1><%= title %></h1>
+<% } else { res.redirect('/') } %>
+
+<%- messages() %>
+
+<% if (errors) { %>
+    <ul class="notice">
+        <% errors.array().forEach(error => { %>
+            <li><%= error.msg %></li>
+            <% }) %>
+        </ul>
+    <% } %>
+
+<form method="POST" action="/inv/modify-classification/" id="updateForm">
+    <label for="classification_name">Classification Name: </label>
+    <input type = "text" id="classification_name" name = "classification_name" pattern="^[a-zA-Z]+$" title="Name must be Alphabetic Characters Only" required value="<%= locals.classification_name %>">
+    <button type="submit" disabled>Update</button>
+    <script src="/js/inv-update.js"></script>
+    <input type="hidden" name = "classification_id" <% if(locals.classification_id) { %> value="<%= locals.classification_id %>" <% } %>>
+</form>
+

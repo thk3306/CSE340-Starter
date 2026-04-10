@@ -45,8 +45,8 @@ invCont.buildManagementView = async function (req, res, next) {
         title: "Vehicle Management View",
         nav,
         management,
-        classificationSelect,
         classificationManagementList,
+        classificationSelect,
         errors: null
     })
 }
@@ -323,6 +323,53 @@ invCont.deleteClassification = async function (req, res, next) {
     }
     else {
         req.flash("notice", "Sorry, the classification delete failed.")
+        res.redirect("/inv/")
+    }
+}
+
+/* ****************************************
+*  Build and Deliver Classification Modify View
+* *************************************** */
+
+invCont.buildModifyClassification = async function(req, res, next) {
+    let nav = await utilities.getNav()
+    const classification_id = parseInt(req.params.classification_id)
+    const classificationData = await invModel.getClassificationById(classification_id)
+    
+    if(!classificationData) {
+        req.flash("notice", "The Classification was not found.")
+        res.redirect("/inv/")
+    }
+
+    res.render("./inventory/modify-classification", {
+        title: `Modify ${classificationData.classification_name} Classification`,
+        nav,
+        errors: null,
+        classification_id: classificationData.classification_id,
+        classification_name: classificationData.classification_name,
+    })
+}
+
+/* ****************************************
+*  Process modify Classification
+* *************************************** */
+
+invCont.modifyClassification = async function (req, res, next) {
+    const classification_id = parseInt(req.body.classification_id)
+    const classificationData = await invModel.getClassificationById(classification_id)
+
+    if(!classificationData) {
+        req.flash("notice", "The Classification was not found.")
+        res.redirect("/inv/")
+    }
+    const classification_name = req.body.classification_name
+    const updateResult = await invModel.updateClassificationById(classification_id, classification_name)
+    if (updateResult) {
+        req.flash("notice", `The ${classificationData.classification_name} classification was succesfully updated.`)
+        res.redirect("/inv/")
+    }
+    else {
+        req.flash("notice", "Sorry, the classification update failed.")
         res.redirect("/inv/")
     }
 }
