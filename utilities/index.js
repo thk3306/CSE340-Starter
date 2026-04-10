@@ -7,23 +7,28 @@ require("dotenv").config()
  * Constructs the nav HTML unordered list
  ************************** */
 Util.getNav = async function (req, res, next) {
-  let data = await invModel.getClassifications()
-  let list = "<ul>"
-  list += '<li><a href="/" title="Home page">Home</a></li>'
-  data.rows.forEach((row) => {
-    list += "<li>"
-    list +=
-      '<a href="/inv/type/' +
-      row.classification_id +
-      '" title="See our inventory of ' +
-      row.classification_name +
-      ' vehicles">' +
-      row.classification_name +
-      "</a>"
-    list += "</li>"
-  })
-  list += "</ul>"
-  return list
+  try {
+    let data = await invModel.getClassifications()
+    let list = "<ul>"
+    list += '<li><a href="/" title="Home page">Home</a></li>'
+    data.rows.forEach((row) => {
+      list += "<li>"
+      list +=
+        '<a href="/inv/type/' +
+        row.classification_id +
+        '" title="See our inventory of ' +
+        row.classification_name +
+        ' vehicles">' +
+        row.classification_name +
+        "</a>"
+      list += "</li>"
+    })
+    list += "</ul>"
+    return list
+  } catch (error) {
+    console.error("getNav error:", error)
+    return '<ul><li><a href="/" title="Home page">Home</a></li></ul>'
+  }
 }
 
 /* **************************************
@@ -191,17 +196,23 @@ Util.checkJWTToken = (req, res, next) => {
 **************************************** */
 
 Util.checkpermissions = (req, res, next) => {
-  jwt.verify(req.cookies.jwt, process.env.ACCESS_TOKEN_SECRET, function (err, accountData) {
-    if (err) {
+  try {
+    if (!req.cookies.jwt) {
       req.flash("notice", "Please log in")
       return res.redirect("/account/login")
     }
+
+    const accountData = jwt.verify(req.cookies.jwt, process.env.ACCESS_TOKEN_SECRET)
     res.locals.accountData = accountData
-  })
-  if (res.locals.accountData.account_type === "Employee" || res.locals.accountData.account_type === "Admin") {
-    next()
-  } else {
+
+    if (accountData.account_type === "Employee" || accountData.account_type === "Admin") {
+      return next()
+    }
+
     req.flash("notice", "You do not have permission to access this resource.")
+    return res.redirect("/account/login")
+  } catch (error) {
+    req.flash("notice", "Please log in")
     return res.redirect("/account/login")
   }
 }

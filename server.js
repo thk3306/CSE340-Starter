@@ -71,8 +71,15 @@ app.use(async (req, res, next) => {
 *************************/
 
 app.use(async (err, req, res, next) => {
-  let nav = await utilities.getNav()
+  let nav
+  try {
+    nav = await utilities.getNav()
+  } catch (navError) {
+    console.error("error handler nav fallback:", navError)
+    nav = '<ul><li><a href="/" title="Home page">Home</a></li></ul>'
+  }
   console.error(`Error at: "${req.originalUrl}": ${err.message}`)
+  let message
   if(err.status == 404){ message = err.message} else {message = 'Oh no! There was a crash. Maybe try a different route?'}
   res.render("errors/error", {
     title: err.status || 'Server Error',
@@ -86,11 +93,11 @@ app.use(async (err, req, res, next) => {
  * Values from .env (environment) file
  *************************/
 const port = process.env.PORT
-const host = process.env.HOST
+const host = process.env.HOST || "0.0.0.0"
 
 /* ***********************
  * Log statement to confirm server operation
  *************************/
-app.listen(port, () => {
+app.listen(port, host, () => {
   console.log(`app listening on ${host}:${port}`)
 })
