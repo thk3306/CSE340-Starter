@@ -108,7 +108,7 @@ Util.buildClassificationManagementList = async function () {
   data.forEach((row) => {
     list += '<tr>'
     list += '<td>' + row.classification_name + '</td>'
-    list += `<td><a href="/inv/modify-classification/${row.classification_id}" title="Modify">Modify</a></td>`
+    list += `<td><a href="/inv/modify-classification/${row.classification_id}" title="Modify">Change Name</a></td>`
     if (row.inventory_total > 0) {
       list += '<td>(cannot delete: contains ' + row.inventory_total + ' vehicles)</td>'
     } else { 
